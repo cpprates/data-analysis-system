@@ -3,12 +3,12 @@ package com.cpprates.test.dataanalysissystem.model;
 public class SalesData {
     private final String id = "003";
     private String saleId;
-    private String info;
+    private Item item;
     private String salespersonName;
 
-    public SalesData(String saleId, String info, String salespersonName) {
+    public SalesData(String saleId, Item item, String salespersonName) {
         this.saleId = saleId;
-        this.info = info;
+        this.item = item;
         this.salespersonName = salespersonName;
     }
 
@@ -24,12 +24,12 @@ public class SalesData {
         this.saleId = saleId;
     }
 
-    public String getInfo() {
-        return info;
+    public Item getItem() {
+        return item;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public String getSalespersonName() {
