@@ -5,24 +5,57 @@ import com.cpprates.test.dataanalysissystem.model.Item;
 import com.cpprates.test.dataanalysissystem.model.SalesData;
 import com.cpprates.test.dataanalysissystem.model.Salesperson;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class AnalysisDao {
     private List<SalesData> salesDataList;
     private List<Customer> customerList;
     private List<Salesperson> salespersonList;
+    private List<Item> itemList;
+    private String fileName;
 
-
-    public void readFile(String file) {
-        // para cada linha do file
-        // vai chamar o createObjects para criar os objetos
-
+    public AnalysisDao() {
+        salesDataList = new ArrayList<>();
+        customerList = new ArrayList<>();
+        salespersonList = new ArrayList<>();
+        itemList = new ArrayList<>();
     }
 
-    public void writeFile() {
-        // vai escrever no file novo
-        // todas as informações que descobriu
+    public boolean readFile(String file) {
+        fileName = file;
+        try {
+            File myObj = new File("./src/main/java/data/in/" + file);
+            Scanner reader = new Scanner(myObj);
+            while (reader.hasNextLine()) {
+                createObjects(reader.nextLine());
+            }
+            reader.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    public void writeFile() throws IOException {
+        File f = new File("./src/main/java/data/out/" + fileName);
+        FileWriter fw = new FileWriter(f, true);
+
+        fw.write("Total quantity of clients in the input file: " + getTotalOfClients());
+        fw.write("\n");
+        fw.write("Total quantity of salesperson in the input file: " + getTotalOfSalesperson());
+        fw.write("\n");
+        fw.write("ID of the most expensive sale: " + getIdOfTheMostExpensiveSale());
+        fw.write("\n");
+        fw.write("Worst salesperson ever: " + getWorstSalespersonEver());
+        fw.close();
     }
 
     public void createObjects(String line) {
@@ -38,9 +71,19 @@ public class AnalysisDao {
                 break;
             case "003":
                 String trimmed = separate[2].substring(1, separate[2].length() - 1);
-                String[] iSep = trimmed.split("-");
-                Item item = new Item(iSep[0], Integer.parseInt(iSep[1]), Double.parseDouble(iSep[2]));
-                SalesData salesData = new SalesData(separate[1], item, separate[3]);
+                if (trimmed.contains(",")) {
+                    String[] itemsString = trimmed.split(",");
+                    for (String i : itemsString) {
+                        String[] iSep = i.split("-");
+                        Item item = new Item(iSep[0], Integer.parseInt(iSep[1]), Double.parseDouble(iSep[2]));
+                        itemList.add(item);
+                    }
+                } else {
+                    String[] iSep = trimmed.split("-");
+                    Item item = new Item(iSep[0], Integer.parseInt(iSep[1]), Double.parseDouble(iSep[2]));
+                    itemList.add(item);
+                }
+                SalesData salesData = new SalesData(separate[1], itemList, separate[3]);
                 salesDataList.add(salesData);
                 break;
         }
@@ -55,19 +98,19 @@ public class AnalysisDao {
     }
 
     public String getIdOfTheMostExpensiveSale() {
-        String id = salesDataList.get(0).getSaleId();
-        double mostExpensive = salesDataList.get(0).getItem().getPrice();
+        String id = "";
+        double mostExpensive = 0;
 
         for (SalesData sale : salesDataList) {
-            if (mostExpensive < sale.getItem().getPrice()) {
-                mostExpensive = sale.getItem().getPrice();
+            if (mostExpensive < sale.getTotalOfSale()) {
+                mostExpensive = sale.getTotalOfSale();
                 id = sale.getSaleId();
             }
         }
         return id;
     }
 
-    public String worstSalespersonEver() {
+    public String getWorstSalespersonEver() {
         return "IDK what that means but I'll find out";
     }
 }
