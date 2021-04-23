@@ -3,7 +3,6 @@ package com.cpprates.test.dataanalysissystem.model;
 import java.util.List;
 
 public class SalesData {
-    private final String id = "003";
     private String saleId;
     private List<Item> itemList;
     private String salespersonName;
@@ -12,10 +11,6 @@ public class SalesData {
         this.saleId = saleId;
         this.itemList = itemList;
         this.salespersonName = salespersonName;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getSaleId() {

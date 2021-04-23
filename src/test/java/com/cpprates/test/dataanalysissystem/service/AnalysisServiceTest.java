@@ -36,7 +36,7 @@ public class AnalysisServiceTest {
     @Test
     public void shouldGetWorstSalespersonEver() {
         shouldReadFile();
-        assertEquals("08", analysisService.getWorstSalespersonEver());
+        assertEquals("Salesperson{name='Renato', salesComission=1592.5}", analysisService.getWorstSalespersonEver());
     }
 
     @Test

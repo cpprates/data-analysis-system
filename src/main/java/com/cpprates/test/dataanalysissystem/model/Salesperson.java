@@ -1,15 +1,34 @@
 package com.cpprates.test.dataanalysissystem.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Salesperson {
-    private final String ID = "001";
     private String name;
     private String cpf;
     private double salary;
+    private List<SalesData> salesDataList;
+    private double salesComission;
 
     public Salesperson(String name, String cpf, double salary) {
         this.name = name;
         this.cpf = cpf;
         this.salary = salary;
+        salesDataList = new ArrayList<>();
+        salesComission = 0;
+    }
+
+    public void addSalesData(SalesData salesData) {
+        salesDataList.add(salesData);
+        salesComission += salesData.getTotalOfSale();
+    }
+
+    public List<SalesData> getSalesDataList() {
+        return salesDataList;
+    }
+
+    public double getSalesComission() {
+        return salesComission;
     }
 
     public String getName() {
@@ -36,7 +55,11 @@ public class Salesperson {
         this.salary = salary;
     }
 
-    public String getID() {
-        return ID;
+    @Override
+    public String toString() {
+        return "Salesperson{" +
+                "name='" + name + '\'' +
+                ", salesComission=" + salesComission +
+                '}';
     }
 }

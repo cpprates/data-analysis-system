@@ -84,6 +84,13 @@ public class AnalysisDao {
                     itemList.add(item);
                 }
                 SalesData salesData = new SalesData(separate[1], itemList, separate[3]);
+
+                for (Salesperson sp : salespersonList) {
+                    if (separate[3].equalsIgnoreCase(sp.getName())) {
+                        sp.addSalesData(salesData);
+                    }
+                }
+
                 salesDataList.add(salesData);
                 break;
         }
@@ -111,6 +118,16 @@ public class AnalysisDao {
     }
 
     public String getWorstSalespersonEver() {
-        return "IDK what that means but I'll find out";
+        double minComission = 0;
+        Salesperson worstSalesperson = null;
+        for (Salesperson sp : salespersonList) {
+            minComission = sp.getSalesComission();
+            worstSalesperson = sp;
+            if (sp.getSalesComission() < minComission) {
+                minComission = sp.getSalesComission();
+                worstSalesperson = sp;
+            }
+        }
+        return worstSalesperson.toString();
     }
 }

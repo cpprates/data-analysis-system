@@ -1,7 +1,6 @@
 package com.cpprates.test.dataanalysissystem.model;
 
 public class Customer {
-    private final String ID = "002";
     private String name;
     private String cnpj;
     private String businessArea;
@@ -34,9 +33,5 @@ public class Customer {
 
     public void setBusinessArea(String businessArea) {
         this.businessArea = businessArea;
-    }
-
-    public String getID() {
-        return ID;
     }
 }
