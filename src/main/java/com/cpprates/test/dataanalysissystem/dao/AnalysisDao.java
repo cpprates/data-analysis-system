@@ -27,11 +27,11 @@ public class AnalysisDao {
         itemList = new ArrayList<>();
     }
 
-    public boolean readFile(String file) {
-        fileName = file;
+    public boolean readFile(String fileName) {
+        this.fileName = fileName;
         try {
-            File myObj = new File("./src/main/java/data/in/" + file);
-            Scanner reader = new Scanner(myObj);
+            File f = new File("./src/main/java/data/in/" + fileName);
+            Scanner reader = new Scanner(f);
             while (reader.hasNextLine()) {
                 createObjects(reader.nextLine());
             }
@@ -45,8 +45,8 @@ public class AnalysisDao {
     }
 
     public void writeFile() throws IOException {
-        File f = new File("./src/main/java/data/out/" + fileName);
-        FileWriter fw = new FileWriter(f, true);
+        File f = new File("./src/main/java/data/out/" + fileName.replace(".dat",".done.dat"));
+        FileWriter fw = new FileWriter(f);
 
         fw.write("Total quantity of clients in the input file: " + getTotalOfClients());
         fw.write("\n");

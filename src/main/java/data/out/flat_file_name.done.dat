@@ -1,4 +1,4 @@
 Total quantity of clients in the input file: 2
 Total quantity of salesperson in the input file: 2
 ID of the most expensive sale: 10
-Worst salesperson ever: IDK what that means but I'll find out
+Worst salesperson ever: Salesperson{name='Renato', salesComission=1592.5}
